@@ -1,0 +1,18 @@
+from tkinter import *
+
+
+width = input("Введите ширину окна: ")
+height = input("Введите высоту окна: ")
+
+while (not width.isdigit() or not height.isdigit()):
+    print("Данные не корректны, введите ещё раз!")
+    width = input("Введите ширину окна: ")
+    height = input("Введите высоту окна: ")
+
+root = Tk()
+root.title('Таймер-секундомер')
+
+root.geometry(f"{width}x{height}")
+root.resizable(width = True, height = True)
+root.config(bg = 'black')
+root.mainloop()
