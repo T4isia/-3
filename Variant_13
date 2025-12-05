@@ -1,18 +1,36 @@
-from tkinter import *
+from tkinter import * # импорт из модуля
 
-
+'''
 width = input("Введите ширину окна: ")
 height = input("Введите высоту окна: ")
 
-while (not width.isdigit() or not height.isdigit()):
+while (not width.isdigit() or not height.isdigit()): #проверка на строку тольлко из цифр
     print("Данные не корректны, введите ещё раз!")
     width = input("Введите ширину окна: ")
     height = input("Введите высоту окна: ")
+'''
 
-root = Tk()
-root.title('Таймер-секундомер')
+width = 600
+height = 600
 
-root.geometry(f"{width}x{height}")
-root.resizable(width = True, height = True)
-root.config(bg = 'black')
-root.mainloop()
+root = Tk() # создание главного окна
+root.title('Таймер-секундомер') # название окна
+
+root.geometry(f"{width}x{height}") #размер окна
+root.resizable(width = True, height = True) #можно вручную менять длину и ширину окна
+root.config(bg = 'pink') #цвет окна
+
+def click(): #функция вызова текста старт при нажатии кнопки
+    print('СТАРТ')
+
+
+btn = Button(root,
+             text = 'СТАРТ', # текст на кнопке
+             command = click, # вывод СТАРТ при нажатии кнопки
+             font = ("Comic Sans MS", 20, "bold"), #шрифт, размер, жирность
+             bg = 'violet', # цвет под кнопкой
+             )
+btn.pack()
+
+
+root.mainloop() #цикл обработки событий Tkinter()
