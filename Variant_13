@@ -4,11 +4,32 @@ from tkinter import * # импорт из модуля
 width = input("Введите ширину окна: ")
 height = input("Введите высоту окна: ")
 
-while (not width.isdigit() or not height.isdigit()): #проверка на строку тольлко из цифр
-    print("Данные не корректны, введите ещё раз!")
+# Проверка что введены целые положительные числа
+while not (width.isdigit() and height.isdigit()):
+    print("Введите целые положительные числа. Введите ещё раз")
     width = input("Введите ширину окна: ")
     height = input("Введите высоту окна: ")
+
+# Преобразуем в числа
+width = int(width)
+height = int(height)
+
+# Проверка диапазона
+while width < 100 or height < 100 or width > 800 or height > 800:
+    print("Введены некорректные данные. Введите ещё раз")
+
+    width = input("Введите ширину окна: ")
+    height = input("Введите высоту окна: ")
+
+    while not (width.isdigit() and height.isdigit()):
+        print("Введите целые положительные числа. Введите ещё раз")
+        width = input("Введите ширину окна: ")
+        height = input("Введите высоту окна: ")
+    # Преобразуем в числа
+    width = int(width)
+    height = int(height)
 '''
+
 
 width = 600
 height = 600
@@ -16,21 +37,21 @@ height = 600
 root = Tk() # создание главного окна
 root.title('Таймер-секундомер') # название окна
 
-root.geometry(f"{width}x{height}") #размер окна
-root.resizable(width = True, height = True) #можно вручную менять длину и ширину окна
-root.config(bg = 'pink') #цвет окна
+root.geometry(f"{width}x{height}") # размер окна
+root.resizable(width = True, height = True) # можно вручную менять длину и ширину окна
+root.config(bg = 'pink') # цвет окна
 
-def click(): #функция вызова текста старт при нажатии кнопки
+def click(): # функция вызова текста старт при нажатии кнопки
     print('СТАРТ')
 
 
 btn = Button(root,
              text = 'СТАРТ', # текст на кнопке
              command = click, # вывод СТАРТ при нажатии кнопки
-             font = ("Comic Sans MS", 20, "bold"), #шрифт, размер, жирность
+             font = ("Comic Sans MS", 20, "bold"), # шрифт, размер, жирность
              bg = 'violet', # цвет под кнопкой
+             activebackground = "light green", # цвет кнопки при нажатии
              )
-btn.pack()
-
+btn.place(x=width-368,y=height-100)
 
 root.mainloop() #цикл обработки событий Tkinter()
