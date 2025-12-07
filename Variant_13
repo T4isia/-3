@@ -1,6 +1,8 @@
 # импорт из модуля
 from tkinter import *
 from datetime import datetime
+import time
+import pygame
 
 
 width = input("Введите ширину окна: ")
@@ -107,10 +109,10 @@ def stopwatch():
 
     root.mainloop() #цикл обработки событий Tkinter()
 
-#def timer():
+def timer():
 
+print("Добро пожаловать в таймер-секундомер!")
 while True:
-    print("Добро пожаловать в таймер-секундомер!")
     print("0 - выход")
     print("1 - секундомер")
     print("2 - таймер")
@@ -118,8 +120,8 @@ while True:
 
     if choice == '1':
         stopwatch()
-    #elif:
-    #    timer()
+    elif choice == '2':
+        timer()
     elif choice == '0':
         print("До свидания!")
         break
