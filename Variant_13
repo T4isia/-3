@@ -1,6 +1,5 @@
 from tkinter import * # импорт из модуля
 
-'''
 width = input("Введите ширину окна: ")
 height = input("Введите высоту окна: ")
 
@@ -15,7 +14,7 @@ width = int(width)
 height = int(height)
 
 # Проверка диапазона
-while width < 100 or height < 100 or width > 800 or height > 800:
+while width < 590 or height < 100 or width > 1200 or height > 8000:
     print("Введены некорректные данные. Введите ещё раз")
 
     width = input("Введите ширину окна: ")
@@ -28,30 +27,38 @@ while width < 100 or height < 100 or width > 800 or height > 800:
     # Преобразуем в числа
     width = int(width)
     height = int(height)
+
 '''
-
-
 width = 600
 height = 600
+'''
 
 root = Tk() # создание главного окна
 root.title('Таймер-секундомер') # название окна
 
 root.geometry(f"{width}x{height}") # размер окна
-root.resizable(width = True, height = True) # можно вручную менять длину и ширину окна
+root.resizable(width = False, height = False) # нельзя вручную менять длину и ширину окна
 root.config(bg = 'pink') # цвет окна
 
-def click(): # функция вызова текста старт при нажатии кнопки
-    print('СТАРТ')
+# текст на кнопке, шрифт, размер, жирность, цвет под кнопкой,цвет кнопки при нажатии
+btnStart = Button(root, text = 'СТАРТ',
+                  font = ("Comic Sans MS", 20, "bold"),
+                  bg = 'violet', activebackground = "light green")
+btnStop = Button(root, text = 'СТОП',
+             font = ("Comic Sans MS", 20, "bold"),
+             bg = 'violet', activebackground = "firebrick1",)
+btnContinue = Button(root, text = 'ПРОДОЛЖИТЬ',
+             font = ("Comic Sans MS", 20, "bold"),
+             bg = 'violet', activebackground = "light yellow",)
+btnReset = Button(root, text = 'СБРОС',
+             font = ("Comic Sans MS", 20, "bold"),
+             bg = 'violet', activebackground = "darkred",)
 
+# выравнивание кнопки в зависимости от веденных координат
+btnStart.place(relx=0.1, y=height-60, anchor="center")
+btnStop.place(relx=0.3, y=height-60, anchor="center")
+btnContinue.place(relx=0.6, y=height-60, anchor="center")
+btnReset.place(relx=0.9, y=height-60, anchor="center")
 
-btn = Button(root,
-             text = 'СТАРТ', # текст на кнопке
-             command = click, # вывод СТАРТ при нажатии кнопки
-             font = ("Comic Sans MS", 20, "bold"), # шрифт, размер, жирность
-             bg = 'violet', # цвет под кнопкой
-             activebackground = "light green", # цвет кнопки при нажатии
-             )
-btn.place(x=width-368,y=height-100)
 
 root.mainloop() #цикл обработки событий Tkinter()
