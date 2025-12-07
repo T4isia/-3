@@ -31,76 +31,111 @@ while width <= 510 or height <= 180 or width >= 1200 or height >= 1000:
     width = int(width)
     height = int(height)
 
-temp = 0
-after_id = ''
-def tick():
+def stopwatch():
     global temp, after_id
-    after_id = root.after(1000, tick) # обновляется каждую секунду(рекурсивная функция)
-    # функция принимает число секунд и превращает его в объект
-    f_temp = datetime.fromtimestamp(temp).strftime('%M:%S') # форматирование вида минут и секунд
-    label.config(text=str(f_temp)) # меняет текст виджета(секунды)
-    temp += 1
-
-# заменяет кнопку старт на стоп
-def start_tick():
-    btnStart.place_forget()
-    btnStop.place(relx=0.5, y=height-60, anchor="center")
-    tick()
-
-# заменяет стоп на продолжить и сброс
-def stop_tick():
-    btnStop.place_forget()
-    btnContinue.place(x=width//2-250, y=height-92)
-    btnReset.place(x=width//2-3, y=height-92)
-    root.after_cancel(after_id) # отменивает команду, возвращает ID задачи, чтобы её можно быо остановить
-
-# заменяет продолжить и сбросить на стоп
-def continue_tock():
-    btnContinue.place_forget()
-    btnReset.place_forget()
-    btnStop.place(relx=0.5, y=height - 60, anchor="center")
-    tick()
-
-# обнуление секундомера
-def reset_click():
-    global temp
     temp = 0
-    label.configure(text='00:00')
-    btnContinue.place_forget()
-    btnReset.place_forget()
-    btnStart.place(relx=0.5, y=height-60, anchor="center")
+    after_id = ''
+    def tick():
+        global temp, after_id
+        after_id = root.after(1000, tick) # обновляется каждую секунду(рекурсивная функция)
+        # функция принимает число секунд и превращает его в объект
+        f_temp = datetime.fromtimestamp(temp).strftime('%M:%S') # форматирование вида минут и секунд
+        label.config(text=str(f_temp)) # меняет текст виджета(секунды)
+        temp += 1
+
+    # заменяет кнопку старт на стоп
+    def start_tick():
+        btnStart.place_forget()
+        btnStop.place(relx=0.5, y=height-60, anchor="center")
+        tick()
+
+    # заменяет стоп на продолжить и сброс
+    def stop_tick():
+        btnStop.place_forget()
+        btnContinue.place(x=width//2-250, y=height-92)
+        btnReset.place(x=width//2-3, y=height-92)
+        root.after_cancel(after_id) # отменивает команду, возвращает ID задачи, чтобы её можно быо остановить
+
+    # заменяет продолжить и сбросить на стоп
+    def continue_tock():
+        btnContinue.place_forget()
+        btnReset.place_forget()
+        btnStop.place(relx=0.5, y=height - 60, anchor="center")
+        tick()
+
+    # обнуление секундомера
+    def reset_click():
+        global temp
+        temp = 0
+        label.configure(text='00:00')
+        btnContinue.place_forget()
+        btnReset.place_forget()
+        btnStart.place(relx=0.5, y=height-60, anchor="center")
 
 
-root = Tk() # создание главного окна
-root.title('Таймер-секундомер') # название окна
+    root = Tk() # создание главного окна
+    root.title('Таймер-секундомер') # название окна
 
-root.geometry(f"{width}x{height}") # размер окна
-root.resizable(width = False, height = False) # нельзя вручную менять длину и ширину окна
-root.config(bg = 'pink') # цвет окна
+    root.geometry(f"{width}x{height}") # размер окна
+    root.resizable(width = False, height = False) # нельзя вручную менять длину и ширину окна
+    root.config(bg = 'pink') # цвет окна
 
-# виджет секундомера
-label = Label(root, width = 6, font=("Comic Sans MS", 40, "bold"), text='00:00')
-label.pack()
+    # виджет секундомера
+    label = Label(root, width = 6, font=("Comic Sans MS", 40, "bold"), text='00:00')
+    label.pack()
 
-# текст на кнопке, шрифт, размер, жирность, цвет под кнопкой,цвет кнопки при нажатии
-btnStart = Button(root, text = 'СТАРТ',
+    # текст на кнопке, шрифт, размер, жирность, цвет под кнопкой,цвет кнопки при нажатии
+    btnStart = Button(root, text = 'СТАРТ',
                   font = ("Comic Sans MS", 20, "bold italic"),
                   command = start_tick, bg = 'violet',
                   activebackground = "light green", width=14, height=1,)
-btnStop = Button(root, text = 'СТОП',
+    btnStop = Button(root, text = 'СТОП',
                   font = ("Comic Sans MS", 20, "bold italic"),
                   command=stop_tick, bg = 'violet',
                   activebackground = "firebrick1", width=14, height=1)
-btnContinue = Button(root, text = 'ПРОДОЛЖИТЬ',
+    btnContinue = Button(root, text = 'ПРОДОЛЖИТЬ',
                   font = ("Comic Sans MS", 20, "bold italic"),
                   command=continue_tock, bg = 'violet',
                   activebackground = "light yellow", width=14, height=1)
-btnReset = Button(root, text = 'СБРОС',
+    btnReset = Button(root, text = 'СБРОС',
                   font = ("Comic Sans MS", 20, "bold italic"),
                   command=reset_click, bg = 'violet',
                   activebackground = "darkred", width=14, height=1)
 
-# выравнивание кнопки в зависимости от веденных координат
-btnStart.place(relx=0.5, y=height-60, anchor="center")
+    # выравнивание кнопки в зависимости от веденных координат
+    btnStart.place(relx=0.5, y=height-60, anchor="center")
 
-root.mainloop() #цикл обработки событий Tkinter()
+    root.mainloop() #цикл обработки событий Tkinter()
+
+#def timer():
+
+while True:
+    print("Добро пожаловать в таймер-секундомер!")
+    print("0 - выход")
+    print("1 - секундомер")
+    print("2 - таймер")
+    choice = input("Выберете пунк: ").strip() # чистим строку от лишних введенных пробелов
+
+    if choice == '1':
+        stopwatch()
+    #elif:
+    #    timer()
+    elif choice == '0':
+        print("До свидания!")
+        break
+    else:
+        print("Неверный выбор. Попробуйте снова.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
