@@ -2,7 +2,7 @@
 from tkinter import *
 from datetime import datetime
 
-'''
+
 width = input("Введите ширину окна: ")
 height = input("Введите высоту окна: ")
 
@@ -30,10 +30,6 @@ while width <= 510 or height <= 180 or width >= 1200 or height >= 1000:
     # Преобразуем в числа
     width = int(width)
     height = int(height)
-'''
-
-width = 600
-height = 600
 
 temp = 0
 after_id = ''
@@ -65,6 +61,16 @@ def continue_tock():
     btnStop.place(relx=0.5, y=height - 60, anchor="center")
     tick()
 
+# обнуление секундомера
+def reset_click():
+    global temp
+    temp = 0
+    label.configure(text='00:00')
+    btnContinue.place_forget()
+    btnReset.place_forget()
+    btnStart.place(relx=0.5, y=height-60, anchor="center")
+
+
 root = Tk() # создание главного окна
 root.title('Таймер-секундомер') # название окна
 
@@ -91,7 +97,7 @@ btnContinue = Button(root, text = 'ПРОДОЛЖИТЬ',
                   activebackground = "light yellow", width=14, height=1)
 btnReset = Button(root, text = 'СБРОС',
                   font = ("Comic Sans MS", 20, "bold italic"),
-                  command=stop_tick, bg = 'violet',
+                  command=reset_click, bg = 'violet',
                   activebackground = "darkred", width=14, height=1)
 
 # выравнивание кнопки в зависимости от веденных координат
