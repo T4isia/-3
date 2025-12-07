@@ -1,5 +1,8 @@
-from tkinter import * # импорт из модуля
+# импорт из модуля
+from tkinter import *
+from datetime import datetime
 
+'''
 width = input("Введите ширину окна: ")
 height = input("Введите высоту окна: ")
 
@@ -14,7 +17,7 @@ width = int(width)
 height = int(height)
 
 # Проверка диапазона
-while width < 590 or height < 100 or width > 1200 or height > 8000:
+while width <= 510 or height <= 180 or width >= 1200 or height >= 1000:
     print("Введены некорректные данные. Введите ещё раз")
 
     width = input("Введите ширину окна: ")
@@ -27,11 +30,40 @@ while width < 590 or height < 100 or width > 1200 or height > 8000:
     # Преобразуем в числа
     width = int(width)
     height = int(height)
-
 '''
+
 width = 600
 height = 600
-'''
+
+temp = 0
+after_id = ''
+def tick():
+    global temp, after_id
+    after_id = root.after(1000, tick) # обновляется каждую секунду(рекурсивная функция)
+    # функция принимает число секунд и превращает его в объект
+    f_temp = datetime.fromtimestamp(temp).strftime('%M:%S') # форматирование вида минут и секунд
+    label.config(text=str(f_temp)) # меняет текст виджета(секунды)
+    temp += 1
+
+# заменяет кнопку старт на стоп
+def start_tick():
+    btnStart.place_forget()
+    btnStop.place(relx=0.5, y=height-60, anchor="center")
+    tick()
+
+# заменяет стоп на продолжить и сброс
+def stop_tick():
+    btnStop.place_forget()
+    btnContinue.place(x=width//2-250, y=height-92)
+    btnReset.place(x=width//2-3, y=height-92)
+    root.after_cancel(after_id) # отменивает команду, возвращает ID задачи, чтобы её можно быо остановить
+
+# заменяет продолжить и сбросить на стоп
+def continue_tock():
+    btnContinue.place_forget()
+    btnReset.place_forget()
+    btnStop.place(relx=0.5, y=height - 60, anchor="center")
+    tick()
 
 root = Tk() # создание главного окна
 root.title('Таймер-секундомер') # название окна
@@ -40,25 +72,29 @@ root.geometry(f"{width}x{height}") # размер окна
 root.resizable(width = False, height = False) # нельзя вручную менять длину и ширину окна
 root.config(bg = 'pink') # цвет окна
 
+# виджет секундомера
+label = Label(root, width = 6, font=("Comic Sans MS", 40, "bold"), text='00:00')
+label.pack()
+
 # текст на кнопке, шрифт, размер, жирность, цвет под кнопкой,цвет кнопки при нажатии
 btnStart = Button(root, text = 'СТАРТ',
-                  font = ("Comic Sans MS", 20, "bold"),
-                  bg = 'violet', activebackground = "light green")
+                  font = ("Comic Sans MS", 20, "bold italic"),
+                  command = start_tick, bg = 'violet',
+                  activebackground = "light green", width=14, height=1,)
 btnStop = Button(root, text = 'СТОП',
-             font = ("Comic Sans MS", 20, "bold"),
-             bg = 'violet', activebackground = "firebrick1",)
+                  font = ("Comic Sans MS", 20, "bold italic"),
+                  command=stop_tick, bg = 'violet',
+                  activebackground = "firebrick1", width=14, height=1)
 btnContinue = Button(root, text = 'ПРОДОЛЖИТЬ',
-             font = ("Comic Sans MS", 20, "bold"),
-             bg = 'violet', activebackground = "light yellow",)
+                  font = ("Comic Sans MS", 20, "bold italic"),
+                  command=continue_tock, bg = 'violet',
+                  activebackground = "light yellow", width=14, height=1)
 btnReset = Button(root, text = 'СБРОС',
-             font = ("Comic Sans MS", 20, "bold"),
-             bg = 'violet', activebackground = "darkred",)
+                  font = ("Comic Sans MS", 20, "bold italic"),
+                  command=stop_tick, bg = 'violet',
+                  activebackground = "darkred", width=14, height=1)
 
 # выравнивание кнопки в зависимости от веденных координат
-btnStart.place(relx=0.1, y=height-60, anchor="center")
-btnStop.place(relx=0.3, y=height-60, anchor="center")
-btnContinue.place(relx=0.6, y=height-60, anchor="center")
-btnReset.place(relx=0.9, y=height-60, anchor="center")
-
+btnStart.place(relx=0.5, y=height-60, anchor="center")
 
 root.mainloop() #цикл обработки событий Tkinter()
