@@ -280,8 +280,8 @@ btn1 = Button(
     text='1 - секундомер',
     font=("Comic Sans MS", 20, "bold italic"),
     command=timer_1,
-    bg='violet',
-    activebackground="light yellow",
+    bg='orange',
+    activebackground="pink",
     width=14,
     height=1
 )
@@ -292,8 +292,8 @@ btn2 = Button(
     text='2 - таймер',
     font=("Comic Sans MS", 20, "bold italic"),
     command=stopwatch_2,
-    bg='violet',
-    activebackground="light yellow",
+    bg='orange',
+    activebackground="light blue",
     width=14,
     height=1
 )
