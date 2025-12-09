@@ -1,46 +1,139 @@
-# импорт из модуля
+# Импорт из модуля
 from tkinter import *
 from datetime import datetime
 import time
 
+
+# Настройки
 def setting():
-    width = input("Введите ширину окна: ")
-    height = input("Введите высоту окна: ")
+    # Окно настроек
+    root = Tk()
+    root.title('НАСТРОЙКИ')
 
-    # Проверка что введены целые положительные числа
-    while not (width.isdigit() and height.isdigit()):
-        print("Введите целые положительные числа. Введите ещё раз")
-        width = input("Введите ширину окна: ")
-        height = input("Введите высоту окна: ")
+    width = 600
+    height = 600
+    result = None
 
-    # Преобразуем в числа
-    width = int(width)
-    height = int(height)
+    # Изображение шестеренки
+    img_Setting = PhotoImage(file="3.3.png")
 
-    # Проверка диапазона
-    while width < 510 or height < 180 or width > 1200 or height > 1000:
-        print("Введены некорректные данные. Введите ещё раз")
+    img_small_setting = img_Setting.subsample(5, 5)
 
-        width = input("Введите ширину окна: ")
-        height = input("Введите высоту окна: ")
+    label = Label(root, image=img_small_setting)
+    label.place(relx=0.05, y=height - 568, anchor="center")
 
-        while not (width.isdigit() and height.isdigit()):
-            print("Введите целые положительные числа. Введите ещё раз")
-            width = input("Введите ширину окна: ")
-            height = input("Введите высоту окна: ")
+    # Настройки окна
+    root.geometry(f"{width}x{height}")
+    root.resizable(width=False, height=False)
+    root.config(bg='gold')
 
-        width = int(width)
-        height = int(height)
+    # Заголовок
+    title_label = Label(
+        root,
+        text="Введите размеры окна",
+        font=("Arial", 26, "bold"),
+        bg='white'
+    )
+    title_label.pack()
+
+    # Подпись ширина
+    width_label = Label(
+        root,
+        text="Ширина:",
+        font=("Arial", 20, "bold"),
+        bg='gold'
+    )
+    width_label.place(x=140, y=120)
+
+    # Поле ввода ширины
+    width_entry = Entry(
+        root,
+        font=("Arial", 25, "bold italic"),
+        width=7
+    )
+    width_entry.place(x=300, y=120)
+
+    # Подпись высота
+    height_label = Label(
+        root,
+        text="Высота:",
+        font=("Arial", 20, "bold"),
+        bg='gold'
+    )
+    height_label.place(x=140, y=200)
+
+    # Поле ввода высоты
+    height_entry = Entry(
+        root,
+        font=("Arial", 25, "bold italic"),
+        width=7
+    )
+    height_entry.place(x=300, y=200)
+
+    # Кнопка подтверждения и проверка
+    def apply_size():
+        nonlocal result
+
+        w = width_entry.get()
+        h = height_entry.get()
+
+        if w.isdigit() and h.isdigit():
+            w = int(w)
+            h = int(h)
+
+            if 510 < w < 1900 and 330 < h < 1000:
+                result = (w, h)
+                root.destroy()
+            # Размер не в диапазоне
+            else:
+                Wrong_label = Label(
+                    root,
+                    text="Размер не в диапазоне!",
+                    font=("Comic Sans MS", 20, "bold"),
+                    fg="red",
+                    bg='gold',
+                    width = 20,
+                    height = 1
+                )
+                Wrong_label.place(relx=0.5, y=400, anchor="center")
+
+        # Введите числа
+        else:
+            Empty_label = Label(
+                root,
+                text="Введите числа!",
+                font=("Comic Sans MS", 20, "bold"),
+                fg="red",
+                bg='gold',
+                width = 20,
+                height = 1
+            )
+            Empty_label.place(relx=0.5, y=400, anchor="center")
+
+    # Кнопка подтверждения
+    apply_btn = Button(
+        root,
+        text="Применить",
+        font=("Comic Sans MS", 18, "bold"),
+        bg='violet',
+        activebackground='light green',
+        command=apply_size
+    )
+    apply_btn.place(relx=0.5, y=300, anchor="center")
+
+    # Запуск работы этого окна
+    root.mainloop()
+    return result
 
 
-# функция секундомера
-def stopwatch():
+# Функция секундомера
+def stopwatch(width, height):
     global temp, after_id
 
     temp = 0
     after_id = ''
 
-    # создание окна с секундами
+    # Создание окна с секундами
     def tick():
         global temp, after_id
 
@@ -49,27 +142,27 @@ def stopwatch():
         label.config(text=str(f_temp))
         temp += 1
 
-    # старт
+    # Старт
     def start_tick():
         btnStart.place_forget()
         btnStop.place(relx=0.5, y=height - 60, anchor="center")
         tick()
 
-    # стоп
+    # Стоп
     def stop_tick():
         btnStop.place_forget()
         btnContinue.place(x=width // 2 - 250, y=height - 92)
         btnReset.place(x=width // 2 - 3, y=height - 92)
         root.after_cancel(after_id)
 
-    # продолжить
+    # Продолжить
     def continue_tock():
         btnContinue.place_forget()
         btnReset.place_forget()
         btnStop.place(relx=0.5, y=height - 60, anchor="center")
         tick()
 
-    # сброс
+    # Сброс
     def reset_click():
         global temp
 
@@ -79,23 +172,23 @@ def stopwatch():
         btnReset.place_forget()
         btnStart.place(relx=0.5, y=height - 60, anchor="center")
 
-    # окно секундомер
+    # Окно секундомер
     root = Tk()
     root.title('СЕКУНДОМЕР')
 
-    # настройки окна
+    # Настройки окна
     root.geometry(f"{width}x{height}")
     root.resizable(width=False, height=False)
     root.config(bg='pink')
 
-    # лейбл с секундами
+    # Лейбл с секундами
     label = Label(root,
                   width=6,
                   font=("Comic Sans MS", 40, "bold"),
                   text='00:00')
     label.pack()
 
-    # кнопка старт
+    # Кнопка старт
     btnStart = Button(
         root,
         text='СТАРТ',
@@ -106,7 +199,8 @@ def stopwatch():
         width=14,
         height=1
     )
-    # кнопка стоп
+
+    # Кнопка стоп
     btnStop = Button(
         root,
         text='СТОП',
@@ -117,7 +211,8 @@ def stopwatch():
         width=14,
         height=1
     )
-    # кнопка продолжить
+
+    # Кнопка продолжить
     btnContinue = Button(
         root,
         text='ПРОДОЛЖИТЬ',
@@ -128,7 +223,8 @@ def stopwatch():
         width=14,
         height=1
     )
-    # кнопка сброс
+
+    # Кнопка сброс
     btnReset = Button(
         root,
         text='СБРОС',
@@ -145,11 +241,12 @@ def stopwatch():
     root.mainloop()
 
 
-# функция таймера
-def timer():
+# Функция таймера
+def timer(width, height):
+    warning_label = None
     stop_flag = False
 
-    # стоп
+    # Стоп
     def stop():
         nonlocal stop_flag
 
@@ -159,7 +256,7 @@ def timer():
         count_digit.config(text='00:00')
         second.delete(0, END)
 
-    # звук
+    # Звук
     def sound():
         btnStop.place_forget()
         btnStart.place(relx=0.5, y=height - 60, anchor="center")
@@ -167,40 +264,61 @@ def timer():
         count_digit.config(text='00:00')
         second.delete(0, END)
 
-    # старт
+    # Старт
     def start():
-        nonlocal stop_flag
+        nonlocal stop_flag, warning_label
 
         stop_flag = False
-        duration = int(second.get())
+
+        value = second.get()
+
+        # Проверка на положительное число
+        if not value.isdigit() or int(value) <= 0:
+
+            if warning_label is None:
+                warning_label = Label(
+                    root,
+                    text="Введите положительное число!",
+                    font=("Comic Sans MS", 20, "bold"),
+                    fg="red",
+                    bg="light blue"
+                )
+                warning_label.place(relx=0.5, y=160, anchor="center")
+
+            return
+
+        if warning_label is not None:
+            warning_label.destroy()
+            warning_label = None
+
+        # Преобразуем в число
+        duration = int(value)
 
         btnStart.place_forget()
         btnStop.place(relx=0.5, y=height - 60, anchor="center")
 
-        # показ на лейбле секунд
+        # Цикл таймера
         while duration and not stop_flag:
-            m, s = divmod(int(duration), 60)
-            min_sec_format = '{:02d}:{:02d}'.format(m, s)
-
-            count_digit['text'] = min_sec_format
+            m, s = divmod(duration, 60)
+            count_digit['text'] = f"{m:02d}:{s:02d}"
             root.update()
             time.sleep(1)
-
             duration -= 1
 
-            if duration == 0 and not stop_flag:
-                sound()
+        # Подключаем звук
+        if duration == 0 and not stop_flag:
+            sound()
 
-    # окно таймер
+    # Окно таймер
     root = Tk()
     root.title('ТАЙМЕР')
 
-    # настройка окна
+    # Настройка окна
     root.geometry(f"{width}x{height}")
     root.resizable(width=False, height=False)
     root.config(bg='light blue')
 
-    # лейбл с секундами
+    # Лейбл с секундами
     count_digit = Label(
         root,
         width=6,
@@ -209,7 +327,7 @@ def timer():
     )
     count_digit.pack()
 
-    # ввод секунд
+    # Ввод секунд
     second = Entry(
         root,
         font=("Comic Sans MS", 30, "bold italic"),
@@ -217,7 +335,7 @@ def timer():
     )
     second.place(relx=0.5, y=120, anchor="center")
 
-    # старт
+    # Старт
     btnStart = Button(
         root,
         text='СТАРТ',
@@ -228,7 +346,8 @@ def timer():
         width=14,
         height=1
     )
-    # стоп
+
+    # Стоп
     btnStop = Button(
         root,
         text='СТОП',
@@ -245,55 +364,77 @@ def timer():
     root.mainloop()
 
 
-# окно меню
+# Окно меню
 root = Tk()
 root.title('МЕНЮ')
 
-# настройка окна
 width = 600
 height = 600
 
+# Изображение таймера
+img_timer = PhotoImage(file="1.1.png")
+
+img_small_timer = img_timer.subsample(2, 2)
+
+label = Label(root, image=img_small_timer)
+label.place(relx=0.29, y=height - 250, anchor="center")
+
+# Изображение секундомера
+img_Stopwatch = PhotoImage(file="2.2.png")
+
+img_small_stopwatch = img_Stopwatch.subsample(2, 2)
+
+label = Label(root, image=img_small_stopwatch)
+label.place(relx=0.7, y=height - 250, anchor="center")
+
+# Настройка окна
 root.geometry(f"{width}x{height}")
 root.resizable(width=False, height=False)
 root.config(bg='white')
 
-# лейбл с меню
+# Лейбл с меню
 count_digit = Label(
     root, width=6, font=("Arial", 40, "bold"), text='МЕНЮ'
 )
 count_digit.pack()
 
-# запуск таймера
+
+# Запуск таймера
 def timer_1():
-    setting()
-    timer()
+    root.destroy()
+    res = setting()
+    w, h = res
+    timer(w, h)
 
-# запуск секундомера
+
+# Запуск секундомера
 def stopwatch_2():
-    setting()
-    stopwatch()
+    root.destroy()
+    res = setting()
+    w, h = res
+    stopwatch(w, h)
 
 
-# кнопка 1 - секундомер
+# Кнопка 1 - таймер
 btn1 = Button(
     root,
-    text='1 - секундомер',
+    text='1 - таймер',
     font=("Comic Sans MS", 20, "bold italic"),
     command=timer_1,
     bg='orange',
-    activebackground="pink",
+    activebackground="light blue",
     width=14,
     height=1
 )
 
-# кнопка 2 - секундомер
+# Кнопка 2 - секундомер
 btn2 = Button(
     root,
-    text='2 - таймер',
+    text='2 - секундомер',
     font=("Comic Sans MS", 20, "bold italic"),
     command=stopwatch_2,
     bg='orange',
-    activebackground="light blue",
+    activebackground="pink",
     width=14,
     height=1
 )
