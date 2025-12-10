@@ -139,7 +139,7 @@ def stopwatch(width, height):
 
         after_id = root.after(1000, tick)
         f_temp = datetime.fromtimestamp(temp).strftime('%M:%S')
-        label.config(text=str(f_temp))
+        label.config(text=f_temp)
         temp += 1
 
     # Старт
