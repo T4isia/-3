@@ -86,7 +86,7 @@ def setting():
                 root.destroy()
             # Размер не в диапазоне
             else:
-                Wrong_label = Label(
+                Wrong_label_1 = Label(
                     root,
                     text="Размер не в диапазоне!",
                     font=("Comic Sans MS", 20, "bold"),
@@ -95,7 +95,27 @@ def setting():
                     width = 20,
                     height = 1
                 )
-                Wrong_label.place(relx=0.5, y=400, anchor="center")
+                Wrong_label_1.place(relx=0.5, y=400, anchor="center")
+                Wrong_label_2 = Label(
+                    root,
+                    text="510 < ширина < 1900",
+                    font=("Comic Sans MS", 20, "bold"),
+                    fg="red",
+                    bg='gold',
+                    width=20,
+                    height=1
+                )
+                Wrong_label_2.place(relx=0.5, y=450, anchor="center")
+                Wrong_label_3 = Label(
+                    root,
+                    text="330 < высота < 1000",
+                    font=("Comic Sans MS", 20, "bold"),
+                    fg="red",
+                    bg='gold',
+                    width=20,
+                    height=1
+                )
+                Wrong_label_3.place(relx=0.5, y=500, anchor="center")
 
         # Введите числа
         else:
